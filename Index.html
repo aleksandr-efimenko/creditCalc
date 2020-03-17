@@ -12,73 +12,60 @@
     <div class="container pt-5" id="app">
         <div class="row mb-3">
             <div class="col">
-                <h1>Cars application</h1>
+                <h1>Credit calc</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="search">Find your car</label>
-                    <input type="text" class="form-control" id="search" placeholder="Name, model..." v-model="search">
+                    <label for="sum">Credit sum</label>
+                    <input type="number" class="form-control" id="sum" placeholder="Credit sum" v-model="sum">
+                    <label for="percent">Percent</label>
+                    <input type="number" class="form-control" id="percent" placeholder="Percent" v-model="percent">
+                    <label for="term">Term</label>
+                    <input type="number" class="form-control" id="term" placeholder="Term" v-model="term">
+                    <label for="dateStart">Date start</label>
+                    <input type="date" class="form-control" id="dateStart" placeholder="Date start" v-model="dateStart">
                 </div>
-                <hr>
-                <ul class="list-group ">
-                    <li v-for="(car, index) in filteredCars" class="list-group-item list-group-item-action pointer" v-on:click="selectCar(index)" v-bind:class="{'active zi': selectedCarIndex === index}">
-                        {{ car.name }} - {{ car.model }}
-                    </li>
-                </ul>
+
             </div>
+
             <div class="col-md-8 pt-3">
                 <div class="row">
-                    <div class="col-md-5">
-                        <h2>{{ car.name }}</h2>
-                        <div  @mouseenter="hover = true" @mouseleave="hover = false"  :class="hover ? 'myClass' : ''">
-                            <img :src="car.image" :alt="car.name" class="rounded detailed-car-image" >
-                        </div> 
-                    </div>
-                    <div class="col-md-7 pt-2">
-                        <h5>Car details</h5>
-                        <ul>
-                            <li>Model - <strong>{{ car.model }}</strong> - {{car.date | momentDate}}</li>
-                            <li>Year - <strong>{{ car.year }}</strong></li>
-                            <li>Owner - <strong>{{ car.owner }}</strong></li>
-                        </ul>
-                        <div class="phone-block">
-                            <transition name="phone">
-                                <p v-if="phoneVisibility">{{ car.phone }}</p>
-                            </transition>
-                        </div>
-                        <button class="btn btn-outline-success mr-3" @click="phoneVisibility = !phoneVisibility" v-text="phoneBtnText"></button>
-                        <button class="btn btn-primary" @click="modalVisibility = true">Buy</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-<transition name="modal">
-        <div class="modal fade show" v-if="modalVisibility" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Do you want to buy this car?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="modalVisibility = false">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="col-md-12 pt-2"> <button class="b20" v-on:click="fAddNewRow" title="Добавить строку в таблицу">+</button>
+                        <table  class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Месяц</th>
+                                    <th>Сумма платежа</th>
+                                    <th>Платеж по основному долгу</th>
+                                    <th>Платеж по процентам</th>
+                                    <th>Остаток долга</th>
+                                </tr>
+                                <tr v-for="(row, index) in tbData">
+                                    <!-- Цикл по строкам -->
+                                    <td style="text-align:center"><b>{{index + 1}}</b></td>
+                                    <!-- Номер строки -->
+                                    <td>{{row.month}} </td>
+                                    <!-- Наименование -->
+                                    <td>{{row.sum}}</td>
+                                    <!-- Количество -->
+                                    <td>{{row.mainPay}}</td>
+                                    <!-- Цена -->
+                                    <td>{{row.percentPay}}</td>
+
+                                    <td>{{row.balance}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-</transition>
-       
-       <transition name="fademainblock">
-        <div class="modal-backdrop fade show" v-if="modalVisibility"></div>
-</transition>
+
+
+
     </div>
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
