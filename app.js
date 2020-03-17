@@ -37,8 +37,8 @@ new Vue({
    watch: {
       term: function () {
           this.tbData.length = 0;
-          for (i = 0; i < this.term; ++i) 
-          this.fAddNewRow('01.01.2020', 100, 10, 90, 1000)
+          for (i = 0; i < this.term*12; ++i) 
+          this.fAddNewRow(moment(new Date()).add(i, 'months').locale('ru', null).format('MMMM YYYY') , i*100, i+10, 90 -i, 1000)
    }
     }
 });
