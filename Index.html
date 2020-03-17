@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="app.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container pt-5" id="app">
+        <div class="row mb-3">
+            <div class="col">
+                <h1>Cars application</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="search">Find your car</label>
+                    <input type="text" class="form-control" id="search" placeholder="Name, model..." v-model="search">
+                </div>
+                <hr>
+                <ul class="list-group ">
+                    <li v-for="(car, index) in filteredCars" class="list-group-item list-group-item-action pointer" v-on:click="selectCar(index)" v-bind:class="{'active zi': selectedCarIndex === index}">
+                        {{ car.name }} - {{ car.model }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8 pt-3">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h2>{{ car.name }}</h2>
+                        <div  @mouseenter="hover = true" @mouseleave="hover = false"  :class="hover ? 'myClass' : ''">
+                            <img :src="car.image" :alt="car.name" class="rounded detailed-car-image" >
+                        </div> 
+                    </div>
+                    <div class="col-md-7 pt-2">
+                        <h5>Car details</h5>
+                        <ul>
+                            <li>Model - <strong>{{ car.model }}</strong> - {{car.date | momentDate}}</li>
+                            <li>Year - <strong>{{ car.year }}</strong></li>
+                            <li>Owner - <strong>{{ car.owner }}</strong></li>
+                        </ul>
+                        <div class="phone-block">
+                            <transition name="phone">
+                                <p v-if="phoneVisibility">{{ car.phone }}</p>
+                            </transition>
+                        </div>
+                        <button class="btn btn-outline-success mr-3" @click="phoneVisibility = !phoneVisibility" v-text="phoneBtnText"></button>
+                        <button class="btn btn-primary" @click="modalVisibility = true">Buy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<transition name="modal">
+        <div class="modal fade show" v-if="modalVisibility" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Do you want to buy this car?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="modalVisibility = false">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</transition>
+       
+       <transition name="fademainblock">
+        <div class="modal-backdrop fade show" v-if="modalVisibility"></div>
+</transition>
+    </div>
+    <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
