@@ -6,11 +6,9 @@ var row = (month, sum, mainPay, percentPay, balance) => ({
     balance
 })
 var tbData = [ // Массив строк
-
-            ]
+]
 new Vue({
     el: '#app',
-
     data: {
         countMonth: 0,
         sum: 50000,
@@ -24,7 +22,6 @@ new Vue({
         tbData: tbData
     },
     computed: { // Определяем вычисляемое свойство для автоматического пересчета сумм и итога
-
     },
     methods: {
         fAddNewRow: function (month, sum, mainPay, percentPay, balance) { // Добавить новую строку в таблицу
@@ -51,20 +48,20 @@ new Vue({
                 var daysInThisYear = (new Date(addMonth.format('YYYY'), 11, 31) - new Date(addMonth.format('YYYY'), 0, 0)) / 86400000;
                 var dailyPercent = this.yearPercent / 100 / daysInThisYear;
 
-                     var monthPercentSum = remainSum * dailyPercent * (moment(addMonth).add(1, 'months') - addMonth) / 86400000;
-                                var creditSum =  this.monthlyPayment - monthPercentSum;
+                var monthPercentSum = remainSum * dailyPercent * (moment(addMonth).add(1, 'months') - addMonth) / 86400000;
+                var creditSum = this.monthlyPayment - monthPercentSum;
                 remainSum = remainSum - creditSum;
-                this.fAddNewRow(addMonth.locale('ru', null).format('DD MMMM YYYY'),Math.round(this.monthlyPayment * 100) / 100, Math.round(creditSum * 100) / 100, Math.round(monthPercentSum * 100) / 100, Math.round(remainSum * 100) / 100);
+                this.fAddNewRow(addMonth.locale('ru', null).format('DD MMMM YYYY'), Math.round(this.monthlyPayment * 100) / 100, Math.round(creditSum * 100) / 100, Math.round(monthPercentSum * 100) / 100, Math.round(remainSum * 100) / 100);
             }
         }
     },
     watch: {
         sum: function () {
-            this.countMonthlyPayment();           
+            this.countMonthlyPayment();
             this.fillTable();
         },
         yearPercent: function () {
-            this.countMonthlyPayment();           
+            this.countMonthlyPayment();
             this.fillTable();
         },
         term: function () {
