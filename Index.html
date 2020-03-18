@@ -21,13 +21,20 @@
                     <label for="sum">Credit sum</label>
                     <input type="number" class="form-control" id="sum" placeholder="Credit sum" v-model="sum">
                     <label for="percent">Percent</label>
-                    <input type="number" class="form-control" id="percent" placeholder="Percent" v-model="percent">
+                    <input type="number" class="form-control" id="percent" placeholder="Percent" v-model="yearPercent">
                     <label for="term">Term</label>
                     <input type="number" class="form-control" id="term" placeholder="Term" v-model="term">
                     <label for="dateStart">Date start</label>
                     <input type="date" class="form-control" id="dateStart" placeholder="Date start" v-model="dateStart">
                 </div>
-
+                <div>
+                <h5>Ежемесячный платеж</h5>
+                <h4>{{monthlyPayment}}</h4>
+</div>            
+                   <div>
+                <h5>Переплата по кредиту</h5>
+                <h4>{{overpayment}}</h4>
+</div>
             </div>
 
             <div class="col-md-8 pt-3">
