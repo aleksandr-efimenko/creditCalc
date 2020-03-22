@@ -7,6 +7,7 @@ var row = (month, sum, mainPay, percentPay, balance) => ({
 })
 var tbData = [ // Массив строк
 ]
+
 new Vue({
     el: '#app',
     data: {
@@ -19,10 +20,13 @@ new Vue({
         monthlyPercent: 0,
         overpayment: 0,
         currency: '',
-        tbData: tbData
+        tbData: tbData,
+        lastOverpayment: 0, 
+        differenceOverpayment:0,
+        show: false
     },
     computed: { // Определяем вычисляемое свойство для автоматического пересчета сумм и итога
-    },
+        },
     methods: {
         fAddNewRow: function (month, sum, mainPay, percentPay, balance) { // Добавить новую строку в таблицу
             this.tbData.push({
@@ -37,8 +41,16 @@ new Vue({
             this.monthlyPercent = this.yearPercent / 100 / 12;
 
             this.monthlyPayment = Math.round(parseFloat(this.sum * this.monthlyPercent / (1 - Math.pow((1 + this.monthlyPercent), -this.term))) * 100) / 100;
+            if (this.overpayment !== 0) {
+                this.lastOverpayment = this.overpayment;
+        }
+            this.show = true; 
             this.overpayment = Math.round((this.sum * this.monthlyPercent / (1 - Math.pow((1 + this.monthlyPercent), -this.term)) * this.term - this.sum) * 100) / 100;
+            this.differenceOverpayment =  Math.round((this.overpayment - this.lastOverpayment)* 100) / 100;
+            setTimeout(this.showDifference, 1000);
         },
+        showDifference:function()
+        {this.show = false;},
         fillTable: function () {
             this.tbData.length = 0; // Обнуление массива
             var addMonth = new Date();
@@ -73,4 +85,5 @@ new Vue({
 
         }
     }
-});
+})
+

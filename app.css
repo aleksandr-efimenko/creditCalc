@@ -1,81 +1,9 @@
-.detailed-car-image {
-    height: 200px;
-}
 
-.pointer {
-    cursor: pointer;
-}
-
-.phone-block {
-    height: 36px
-}
-
-.modal {
-    display: block;
-}
-
-/* Animations */
-
-/* *-enter */
-/* *-enter-active */
-/* *-enter-to */
-
-/* *-leave */
-/* *-leave-active */
-/* *-leave-to */
-.phone-enter-active,
-.phone-leave-active {
-    transition: all .5s;
-}
-
-.phone-enter,
-.phone-leave-to {
-    transform: translateX(50px);
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active до версии 2.1.8 */ {
+    transform: translateX(10px);
     opacity: 0;
-}
-
-.modal-enter-active,
-.modal-leave-active {
-    transition: all .5s;
-}
-
-.modal-enter,
-.modal-leave-to {
-    transform: translateY(-100px);
-}
-
-.fademainblock-enter-active {
-    animation: .75s fademainblock forwards;
-}
-
-.fademainblock-leave-active {
-    animation: .75s fademainblock reverse;
-}
-
-.fademainblock-enter,
-.fademainblock-leave-to {
-    opacity: 0;
-}
-
-@keyframes fademainblock {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: .5;
-    }
-}
-.zi{
-    opacity: .99;
-}
-.myClass {
-
-      position: absolute;
-    display: block;
-    transform: scale(3, 3);
-    transition: 0.2s;
-    /* Время эффекта */
-  
-z-index:10;
-}
+  }
