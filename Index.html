@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="app.css">
     <link href="https://momentjs.com/downloads/moment-with-locales.min.js" rel="preload" as="script">
 
@@ -29,17 +30,30 @@
                     <label for="dateStart">Date start</label>
                     <input type="date" class="form-control" id="dateStart" placeholder="Date start" v-model="dateStart">
                 </div>
+
+
                 <div>
                     <h5>Ежемесячный платеж</h5>
-                    <h4>{{monthlyPayment}}</h4>
+                    <div class=""> {{monthlyPayment}}
+                        <transition name="slide-fade">
+                            <span v-if="showDifference" v-bind:class="{ 
+                                'text-success': !positiveMontly,
+                                'text-danger': positiveMontly 
+                            }"><span v-if="positiveMontly">+</span>{{differencetMontlyPayment}}</span>
+                        </transition>
+                    </div>
                 </div>
                 <div>
                     <h5>Переплата по кредиту</h5>
-                    <h4>{{overpayment}} </h4>
+                    <div class="">{{overpayment}}
                     <transition name="slide-fade">
-                        <p v-if="show">{{differenceOverpayment}}</p>
-                      </transition>
+                        <span v-if="showDifference" v-bind:class="{ 
+                            'text-success': !positiveOverpayment,
+                            'text-danger': positiveOverpayment 
+                        }"><span v-if="positiveOverpayment">+</span>{{differenceOverpayment}}</span>
+                    </transition>
                 </div>
+            </div>
             </div>
 
             <div class="col-md-8 pt-3">

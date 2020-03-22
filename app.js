@@ -21,12 +21,16 @@ new Vue({
         overpayment: 0,
         currency: '',
         tbData: tbData,
-        lastOverpayment: 0, 
-        differenceOverpayment:0,
-        show: false
+        lastMontlyPayment: 0,
+        differencetMontlyPayment: 0,
+        positiveMontly: true,
+        lastOverpayment: 0,
+        differenceOverpayment: 0,
+        positiveOverpayment: true,
+        showDifference: false
     },
     computed: { // Определяем вычисляемое свойство для автоматического пересчета сумм и итога
-        },
+    },
     methods: {
         fAddNewRow: function (month, sum, mainPay, percentPay, balance) { // Добавить новую строку в таблицу
             this.tbData.push({
@@ -40,17 +44,28 @@ new Vue({
         countMonthlyPayment: function () {
             this.monthlyPercent = this.yearPercent / 100 / 12;
 
+  
+            this.lastOverpayment = this.overpayment;
+            this.lastMontlyPayment = this.monthlyPayment;
             this.monthlyPayment = Math.round(parseFloat(this.sum * this.monthlyPercent / (1 - Math.pow((1 + this.monthlyPercent), -this.term))) * 100) / 100;
-            if (this.overpayment !== 0) {
-                this.lastOverpayment = this.overpayment;
-        }
-            this.show = true; 
             this.overpayment = Math.round((this.sum * this.monthlyPercent / (1 - Math.pow((1 + this.monthlyPercent), -this.term)) * this.term - this.sum) * 100) / 100;
-            this.differenceOverpayment =  Math.round((this.overpayment - this.lastOverpayment)* 100) / 100;
-            setTimeout(this.showDifference, 1000);
+
+            this.differencetMontlyPayment = Math.round((this.monthlyPayment - this.lastMontlyPayment) * 100) / 100;
+            if(this.differencetMontlyPayment > 0)        {this.positiveMontly = true;} 
+            else {this.positiveMontly = false;}
+
+            this.differenceOverpayment = Math.round((this.overpayment - this.lastOverpayment) * 100) / 100;
+            if(this.differenceOverpayment > 0)   {this.positiveOverpayment = true;}
+            else {this.positiveOverpayment = false;}
+
+            if (this.differenceOverpayment == this.overpayment) {
+                this.showDifference = false;
+            }
+            else{this.showDifference = true; 
+                setTimeout(this.showDifferenceDelay, 1500);}
+            
         },
-        showDifference:function()
-        {this.show = false;},
+        showDifferenceDelay: function () { this.showDifference = false; },
         fillTable: function () {
             this.tbData.length = 0; // Обнуление массива
             var addMonth = new Date();
